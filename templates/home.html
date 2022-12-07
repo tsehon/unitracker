@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>unitracker</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/home.css') }}">
+    <script src="https://kit.fontawesome.com/8286b5936a.js" crossorigin="anonymous"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/favicon/site.webmanifest">
+</head>
+    <body>
+        <div id="header">
+           <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" id="logo">
+           <h1 id="title">unitracker</h1>
+        </div>
+
+        <div id="form-container">
+            <form action="/submit_filter_category" method="POST">
+                <div id="filter-form">
+                    <p>Filter Unicorns By:</p>
+
+                    {% for key, value in filters.items() %}
+                    <input type="radio" name="filter_category" id={{key}} value={{key}} class="form_item" checked>
+                        {{value}}
+                    </input>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>unitracker</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/filtered.css') }}">
+    <script src="https://kit.fontawesome.com/8286b5936a.js" crossorigin="anonymous"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/favicon/site.webmanifest">
+    {{ url_for('save_figure', filter_category=filter_category, filter_selection=filter_selection) }}
+</head>
+<body>
+<div id="header">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" id="logo">
+    <h1 id="title">
+        {% if filter_selection == 'None': %}
+        by {{ filter_category }}:
+        {% else %}
+        in {{ filter_selection }}:
+        {% endif %}
+    </h1>
+</div>
+<div id="figure">
+    <img src="{{ url_for('static', filename='images/plot.png') }}" alt="plot" id="plot">
+</div>
+
+    {% if filter_selection == 'None': %}
+<!--
+    <div> There are {{num_unicorns}} unicorns in {{filter_category}}. </div>
+    <div> The average valuation of unicorns in {{filter_category}} is {{avg_valuation}}. </div>
+-->
+    <div id="form-container">
+        <form action="/submit_filter_selection" method="POST">
+            <div id="selector-form">
+                <p>Select One:</p>
+                <SELECT name="filter_selection">
+                    {% for opt in selections %}
+                        {% if opt == 'all': %}
+                            <OPTION value='{{opt}}' selected>{{opt}}</option>
+                        {% else: %}
+                            <OPTION value='{{opt}}'>{{opt}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </SELECT>
+
+                <div>
+                    <input type="submit" value="Submit">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% else: %}
+<!--
+    <div> There are {{num_unicorns}} unicorns in {{filter_selection}}. </div>
+    <div> The average valuation of unicorns in {{filter_selection}} is {{avg_valuation}}. </div>
+-->
+    {% endif %}
+
+</div>
+</body>
+</html>
+
